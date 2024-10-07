@@ -1,0 +1,34 @@
+3
+##start
+start 0 3
+T 1 1
+E 2 1
+G 3 1
+K 1 3
+A 2 2
+C 3 2
+V 4 2
+N 2 4
+M 3 4
+O 1 5
+Q 2 5
+S 3 5
+##end
+end 5 3
+start-T
+T-E
+E-G
+start-K
+start-O
+O-Q
+K-A
+K-N
+N-M
+Q-N
+N-S
+G-M
+A-C
+C-V
+S-end
+M-end
+V-end
