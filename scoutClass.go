@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Scout struct {
 	CurrentRoom   *Piece
 	MemorizedPath []*Piece
@@ -44,11 +46,11 @@ func StartExploration(startRoom *Piece) [][]*Piece {
 	return allPaths
 }
 
-func SortPath(allPaths [][]*Piece) [][]*Piece {
+func SortPath(allPaths [][][]*Piece) [][][]*Piece {
 	for range allPaths {
 		for j := range allPaths {
 			for i := len(allPaths) - 1; i > j; i-- {
-				if len(allPaths[j]) > len(allPaths[i]) {
+				if len(allPaths[j]) < len(allPaths[i]) {
 					allPaths[j], allPaths[i] = allPaths[i], allPaths[j]
 				}
 			}
@@ -57,9 +59,29 @@ func SortPath(allPaths [][]*Piece) [][]*Piece {
 	return allPaths
 }
 
-/* func IndiePaths(allPaths [][]*Piece) [][][]*Piece {
+func IndiePaths(allPaths [][]*Piece) [][][]*Piece {
+	independentGroups := [][][]*Piece{}
 
-	for _, g := range independentGroups {
+	for _, path := range allPaths {
+		nouvGroup := [][]*Piece{path}
+		for _, indePath := range allPaths {
+			valid := true
+			for _, groupPath := range nouvGroup {
+				if !IsInde(indePath, groupPath) {
+					valid = false
+				}
+			}
+			if valid {
+				nouvGroup = append(nouvGroup, indePath)
+			}
+		}
+		independentGroups = append(independentGroups, nouvGroup)
+	}
+	return independentGroups
+}
+
+func PrintGroups(groups [][][]*Piece) {
+	for _, g := range groups {
 		for _, l := range g {
 			for _, s := range l {
 				fmt.Print(s.Nom)
@@ -68,8 +90,21 @@ func SortPath(allPaths [][]*Piece) [][]*Piece {
 		}
 		fmt.Println()
 	}
-	return independentGroups
-} */
+}
+
+func IsInde(path, path2 []*Piece) bool {
+	for _, s := range path {
+		if !s.Start && !s.End {
+			for _, c := range path2 {
+				if s.Nom == c.Nom {
+					return false
+				}
+			}
+		}
+	}
+	return true
+}
+
 /*
 independentGroups := [][][]*Piece{} // Liste de groupes de chemins indépendants
 

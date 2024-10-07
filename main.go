@@ -12,14 +12,15 @@ func main() {
 	fmt.Println(tabFourmis, tabRelation)
 
 	allPaths := StartExploration(tabSalles[0])
-	allPaths = SortPath(allPaths)
-	for _, l := range allPaths {
+	/*for _, l := range allPaths {
 		for _, s := range l {
 			fmt.Print(s.Nom)
 		}
 		fmt.Println()
-	}
-	//IndiePaths(allPaths)
+	}*/
+	allGroups := IndiePaths(allPaths)
+	allGroups = SortPath(allGroups)
+	PrintGroups(allGroups)
 	//fourmis()
 }
 
