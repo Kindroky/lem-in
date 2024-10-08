@@ -89,12 +89,25 @@ func VerifyStartEnd(content string) (string, string) {
 		os.Exit(2)
 	} else if countEnd != 1 {
 		fmt.Println("ERROR : Invalid number of End line")
+		os.Exit(2)
+	}
+	if !isRoom(roomEnd) || !isRoom(roomStart) {
+		fmt.Println("ERROR : Invalid start/end room format")
 		os.Exit(3)
-	} else {
-		return roomStart, roomEnd
 	}
 	return roomStart, roomEnd
 }
+func isRoom(str string) bool {
+	contentStr := strings.Split(str, " ")
+	if len(contentStr) != 3 {
+		return false
+	} else if contentStr[0][0] == 'L' || contentStr[0][0] == '#' {
+		fmt.Println("ERROR : Invalid room name")
+		os.Exit(4)
+	}
+	return true
+}
+
 func VerifyRoom(content string) []string {
 	roomSlice := []string{}
 	contentSlice := strings.Split(content, "\n")
