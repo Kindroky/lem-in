@@ -26,6 +26,10 @@ func GettingFile() string {
 	for buf.Scan() {
 		fileContent += buf.Text() + "\n"
 	}
+	if fileContent == "" {
+		fmt.Println("ERROR : Empty file")
+		os.Exit(0)
+	}
 	return fileContent
 }
 
