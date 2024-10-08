@@ -6,7 +6,7 @@ func Assignerfourmi(tabFourmi []*Fourmi, groupe [][]*Piece) {
 
 	for compteurfourmi < len(tabFourmi) {
 		for _, chemin := range groupe {
-			if compteurniveau < len(chemin) && compteurfourmi < len(tabFourmi) {
+			if compteurniveau > len(chemin) && compteurfourmi < len(tabFourmi) {
 				tabFourmi[compteurfourmi].Chemin = chemin
 				compteurfourmi++
 			}

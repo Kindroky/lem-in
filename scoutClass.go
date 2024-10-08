@@ -44,19 +44,6 @@ func StartExploration(startRoom *Piece) [][]*Piece {
 	return allPaths
 }
 
-func SortPath(allPaths [][][]*Piece) [][][]*Piece {
-	for range allPaths {
-		for j := range allPaths {
-			for i := len(allPaths) - 1; i > j; i-- {
-				if len(allPaths[j]) < len(allPaths[i]) {
-					allPaths[j], allPaths[i] = allPaths[i], allPaths[j]
-				}
-			}
-		}
-	}
-	return allPaths
-}
-
 func IndiePaths(allPaths [][]*Piece) [][][]*Piece {
 	independentGroups := [][][]*Piece{}
 
@@ -76,6 +63,31 @@ func IndiePaths(allPaths [][]*Piece) [][][]*Piece {
 		independentGroups = append(independentGroups, nouvGroup)
 	}
 	return independentGroups
+}
+
+func TrimGroup(group [][]*Piece) [][]*Piece {
+	tabFinal := [][]*Piece{}
+	for _, chemin := range group {
+		valid := true
+		strChemin := ""
+		for _, salle := range chemin {
+			strChemin += salle.Nom
+		}
+		for _, c := range tabFinal {
+			strC := ""
+			for _, s := range c {
+				strC += s.Nom
+			}
+			if strChemin == strC {
+				valid = false
+			}
+		}
+
+		if valid {
+			tabFinal = append(tabFinal, chemin)
+		}
+	}
+	return tabFinal
 }
 
 func PrintGroups(groups [][][]*Piece) {
