@@ -27,6 +27,15 @@ func main() {
 	PrintGroups(bestGroups)
 	fmt.Println("---------")
 	PrintGroups(append([][][]*Piece{}, bestGroup))
+	Assignerfourmi(tabFourmis, bestGroup)
+	fmt.Println(tabFourmis[2])
+	for !tabFourmis[len(tabFourmis)-1].Salle.End {
+		for _, check := range tabRelation {
+			check.Utilise = false
+		}
+		Avancefourmi(tabFourmis)
+		fmt.Println()
+	}
 	//fourmis()
 }
 

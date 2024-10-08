@@ -5,6 +5,7 @@ import "fmt"
 type Fourmi struct {
 	Salle  *Piece //room it is located in
 	Numero int    // name of the ant
+	Chemin []*Piece
 }
 
 //check if we can move an ant to a specific new room and move it if possible
@@ -43,5 +44,5 @@ func (f *Fourmi) AffichageFourmi() string {
 
 //create a new ant
 func NewFourmi(salle *Piece, tabFourmi []*Fourmi) *Fourmi {
-	return &Fourmi{salle, len(tabFourmi) + 1}
+	return &Fourmi{salle, len(tabFourmi) + 1, []*Piece{}}
 }
