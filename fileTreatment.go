@@ -42,7 +42,7 @@ func VerifyAnt(content string) int {
 				break
 			}
 		}
-		if isNumber && lineStr != "" {
+		if isNumber && lineStr != "0" {
 			countAnt++
 			numberAnt = lineStr
 		}
@@ -101,6 +101,10 @@ func VerifyRoom(content string) []string {
 	for _, lineStr := range contentSlice {
 		contentLine := strings.Split(lineStr, " ")
 		if len(contentLine) == 3 {
+			if contentLine[0][0] == 'L' || contentLine[0][0] == '#' {
+				fmt.Println("ERROR : Invalid room name")
+				os.Exit(4)
+			}
 			coordX := contentLine[1]
 			coordY := contentLine[2]
 
@@ -113,7 +117,7 @@ func VerifyRoom(content string) []string {
 	}
 	if len(roomSlice) < 2 {
 		fmt.Println("ERROR : Invalid number of room")
-		os.Exit(4)
+		os.Exit(5)
 	}
 	nameMap := make(map[string]bool)
 	coordMap := make(map[string]bool)
@@ -124,13 +128,13 @@ func VerifyRoom(content string) []string {
 
 		if nameMap[name] {
 			fmt.Println("ERROR : Duplicate room name:", name)
-			os.Exit(5)
+			os.Exit(6)
 		}
 		nameMap[name] = true
 
 		if coordMap[coord] {
 			fmt.Println("ERROR : Duplicate room coord:", coord)
-			os.Exit(5)
+			os.Exit(6)
 		}
 		coordMap[coord] = true
 	}
@@ -148,7 +152,7 @@ func VerifyRelation(content string, allRooms []string) []string {
 	}
 	if len(relaSlice) < 1 {
 		fmt.Println("ERROR : Invalid number of relation")
-		os.Exit(6)
+		os.Exit(7)
 	}
 
 	relaMap := make(map[string]bool)
@@ -162,18 +166,18 @@ func VerifyRelation(content string, allRooms []string) []string {
 
 		if !roomNameMap[roomRela[0]] || !roomNameMap[roomRela[1]] {
 			fmt.Println("ERROR : Room related to unknown room :", rela)
-			os.Exit(7)
+			os.Exit(8)
 		}
 
 		relationKey := roomRela[0] + "-" + roomRela[1]
 		reverseKey := roomRela[1] + "-" + roomRela[0]
 		if relationKey == reverseKey {
 			fmt.Println("ERROR : Room related to itself :", rela)
-			os.Exit(7)
+			os.Exit(9)
 		}
 		if relaMap[relationKey] || relaMap[reverseKey] {
 			fmt.Println("ERROR : Duplicate relation :", rela)
-			os.Exit(7)
+			os.Exit(9)
 		}
 		relaMap[relationKey] = true
 	}
