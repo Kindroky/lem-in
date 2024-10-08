@@ -16,10 +16,10 @@ S 3 5
 ##end
 end 5 3
 start-T
-T-E
-E-G
 start-K
 start-O
+T-E
+E-G
 O-Q
 K-A
 K-N

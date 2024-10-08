@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 type Scout struct {
 	CurrentRoom   *Piece
@@ -166,53 +169,10 @@ func FindShortestPath(groups [][][]*Piece) [][]*Piece {
 		}
 	}
 
+	if bestGroupIndex == -1 {
+		fmt.Println("ERROR : No valid path")
+		os.Exit(10)
+	}
+
 	return groups[bestGroupIndex] // Return the best group
 }
-
-/*
-independentGroups := [][][]*Piece{} // Liste de groupes de chemins indépendants
-
-	for _, path := range allPaths {
-		wasAddedToGroup := false
-		newGroups := [][][]*Piece{} // Garde une trace des nouveaux groupes qui incluront le chemin
-
-		// Parcourir tous les groupes existants
-		for _, group := range independentGroups {
-			conflict := false
-
-			// Vérification des conflits de salles intermédiaires avec les chemins du groupe
-			for _, otherPath := range group {
-				for i := 1; i < len(path)-1; i++ { // Ignorer la première et la dernière pièce
-					for j := 1; j < len(otherPath)-1; j++ {
-						if path[i].Nom == otherPath[j].Nom {
-							conflict = true
-							break
-						}
-					}
-					if conflict {
-						break
-					}
-				}
-				if conflict {
-					break
-				}
-			}
-
-			// Si aucun conflit, ajouter le chemin à ce groupe
-			if !conflict {
-				group = append(group, path)
-				newGroups = append(newGroups, group)
-				wasAddedToGroup = true
-			}
-		}
-
-		// Si le chemin peut être ajouté à plusieurs groupes, les nouvelles versions de ces groupes sont ajoutées
-		if wasAddedToGroup {
-			independentGroups = append(independentGroups, newGroups...)
-		}
-
-		// Si le chemin ne peut pas être ajouté à un groupe existant, on crée un nouveau groupe
-		if !wasAddedToGroup {
-			independentGroups = append(independentGroups, [][]*Piece{path})
-		}
-	} */
