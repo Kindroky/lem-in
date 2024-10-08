@@ -10,9 +10,7 @@ type Scout struct {
 // Explore method for Scouts
 func (s *Scout) Explore(allPaths *[][]*Piece) {
 	// Mark the current room as visited
-	if !s.CurrentRoom.End {
-		s.CurrentRoom.Visited = true
-	}
+	s.CurrentRoom.Visited = true
 
 	s.MemorizedPath = append(s.MemorizedPath, s.CurrentRoom)
 
@@ -103,6 +101,60 @@ func IsInde(path, path2 []*Piece) bool {
 		}
 	}
 	return true
+}
+
+func FindGroupsWithMostPaths(groups [][][]*Piece) [][][]*Piece {
+	var mostIndiePaths [][][]*Piece //initialize a slice of groups with most indie paths
+	maxPaths := 0
+
+	for _, group := range groups {
+		if len(group) > maxPaths {
+			maxPaths = len(group)
+			mostIndiePaths = [][][]*Piece{group}
+		} else if len(group) == maxPaths {
+			mostIndiePaths = append(mostIndiePaths, group)
+		}
+	}
+	return mostIndiePaths
+}
+
+func FindShortestPath(groups [][][]*Piece) [][]*Piece {
+	if len(groups) == 1 { // If there is only 1 group, return it
+		return groups[0]
+	}
+
+	minRooms := -1
+	bestGroupIndex := -1
+
+	for i := 0; i < len(groups); i++ {
+		nbOfRooms := 0
+		for j := 0; j < len(groups[i]); j++ {
+			nbOfRooms += len(groups[i][j]) // Total number of rooms in each group
+		}
+
+		// Update the best group if this group has fewer rooms
+		if minRooms == -1 || nbOfRooms < minRooms {
+			minRooms = nbOfRooms
+			bestGroupIndex = i
+		} else if nbOfRooms == minRooms {
+			// Find the shortest path length in the current best group
+			bestPathLength := -1
+			for _, path := range groups[bestGroupIndex] {
+				if bestPathLength == -1 || len(path) < bestPathLength {
+					bestPathLength = len(path)
+				}
+			}
+
+			// Check the current group for a shorter path
+			for _, path := range groups[i] {
+				if len(path) < bestPathLength {
+					bestGroupIndex = i // Update the current group to the bestgroup if it contains a shorter path
+				}
+			}
+		}
+	}
+
+	return groups[bestGroupIndex] // Return the best group
 }
 
 /*

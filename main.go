@@ -20,7 +20,13 @@ func main() {
 	}*/
 	allGroups := IndiePaths(allPaths)
 	allGroups = SortPath(allGroups)
+	bestGroups := FindGroupsWithMostPaths(allGroups)
+	bestGroup := FindShortestPath(bestGroups)
 	PrintGroups(allGroups)
+	fmt.Println("---------")
+	PrintGroups(bestGroups)
+	fmt.Println("---------")
+	PrintGroups(append([][][]*Piece{}, bestGroup))
 	//fourmis()
 }
 
