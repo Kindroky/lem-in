@@ -124,10 +124,24 @@ func VerifyRoom(content string) []string {
 			}
 			coordX := contentLine[1]
 			coordY := contentLine[2]
-
-			if _, errX := strconv.Atoi(coordX); errX == nil {
-				if _, errY := strconv.Atoi(coordY); errY == nil {
-					roomSlice = append(roomSlice, lineStr)
+			isNumberX, isNumberY := true, true
+			for _, ru := range coordX {
+				if ru < '0' || ru > '9' {
+					isNumberX = false
+					break
+				}
+			}
+			for _, ru := range coordY {
+				if ru < '0' || ru > '9' {
+					isNumberY = false
+					break
+				}
+			}
+			if isNumberX && isNumberY {
+				if _, errX := strconv.Atoi(coordX); errX == nil {
+					if _, errY := strconv.Atoi(coordY); errY == nil {
+						roomSlice = append(roomSlice, lineStr)
+					}
 				}
 			}
 		}
