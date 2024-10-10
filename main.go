@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	timer := time.Now()
 	fileContent := GettingFile()
 	numberAntPoint, roomStartPoint, roomEndPoint, roomsPoint, relasPoint := VerifyFile(fileContent)
 	tabSalles, tabFourmis, tabRelation := CreateAntEmpire(numberAntPoint, roomStartPoint, roomEndPoint, roomsPoint, relasPoint)
@@ -16,16 +17,25 @@ func main() {
 	allGroups := IndiePaths(allPaths)
 	bestGroups := FindGroupsWithMostPaths(allGroups)
 	bestGroup := TrimGroup(FindShortestPath(bestGroups))
-	PrintGroups(allGroups)
+	/*PrintGroups(allGroups)
 	fmt.Println("---------")
 	PrintGroups(bestGroups)
 	fmt.Println("---------")
-	PrintGroups(append([][][]*Piece{}, bestGroup))
+	PrintGroups(append([][][]*Piece{}, bestGroup))*/
 	Assignerfourmi(tabFourmis, bestGroup)
-	for _, f := range tabFourmis {
+	/*for _, f := range tabFourmis {
 		fmt.Println(*f)
+	}*/
+
+	fmt.Println(len(tabFourmis))
+	for _, p := range tabSalles {
+		fmt.Println(p.AffichagePiece())
 	}
-	timer := time.Now()
+	for _, l := range tabRelation {
+		fmt.Println(l.AffichageRelation())
+	}
+	fmt.Println()
+
 	compteur := 0
 	for !tabFourmis[len(tabFourmis)-1].Salle.End {
 		compteur++
@@ -35,8 +45,8 @@ func main() {
 		Avancefourmi(tabFourmis)
 		fmt.Println()
 	}
-	fmt.Println(time.Since(timer))
-	fmt.Println(compteur)
+	fmt.Println("temp : ", time.Since(timer))
+	fmt.Println("nombre de tours :", compteur)
 }
 
 func VerifyFile(content string) (*int, *string, *string, []string, []string) {

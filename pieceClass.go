@@ -47,11 +47,18 @@ func (p *Piece) NewLiaison(nouvPiece *Piece) *Relation {
 }
 
 func (p *Piece) AffichagePiece() string {
-	strFinal := fmt.Sprintf("%s -> ", p.Nom)
+	/*strFinal := fmt.Sprintf("%s -> ", p.Nom)
 	for _, s := range p.GetSalles() {
 		strFinal += fmt.Sprintf("<- %s ", s.Nom)
 	}
-	return strFinal
+	return strFinal*/
+	strFinal := ""
+	if p.Start {
+		strFinal += "##start\n"
+	} else if p.End {
+		strFinal += "##end\n"
+	}
+	return strFinal + fmt.Sprintf("%s %d %d", p.Nom, p.PosX, p.PosY)
 }
 
 func NewEnd(strSalle string) *Piece {

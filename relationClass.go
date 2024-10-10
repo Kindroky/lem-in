@@ -15,5 +15,5 @@ func (r *Relation) Use() {
 
 //display links between rooms
 func (r *Relation) AffichageRelation() string {
-	return fmt.Sprintf("%s <-> %s", r.Salle1.Nom, r.Salle2.Nom)
+	return fmt.Sprintf("%s-%s", r.Salle1.Nom, r.Salle2.Nom)
 }
